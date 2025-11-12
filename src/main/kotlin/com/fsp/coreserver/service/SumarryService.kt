@@ -55,30 +55,3 @@ class SumarryService(
 
 }
 
-
-@Transactional
-fun generatedChat(request: ChatMessageRequest): ChatMessageResponse {
-    // 1️⃣ 세션ID 생성 or 주입
-    val resolvedSessionId = request.sessionId ?: UUID.randomUUID().toString()
-    val content = """
-            시: ${request.poem},
-            느낀점 : ${request.content}
-        """.trimIndent()
-    // 2️⃣ 유저 메시지 저장
-    conversationRepository.save(
-        Chat(sessionId = resolvedSessionId, role = Role.USER, content = request.content)
-    )
-
-    // 3️⃣ AI 서버 호출
-    val aiResponse = aiService.elaborateText(request.content)
-
-    // 4️⃣ AI 응답 저장
-    conversationRepository.save(
-        Chat(sessionId = resolvedSessionId, role = Role.ASSISTANT, content = aiResponse)
-    )
-    return ChatMessageResponse(
-        sessionId = resolvedSessionId,
-        role =Role.ASSISTANT,
-        content = content
-    )
-}
