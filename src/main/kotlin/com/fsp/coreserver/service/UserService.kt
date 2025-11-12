@@ -44,5 +44,10 @@ class UserService(
         return LoginResponse(accessToken,refreshToken)
     }
 
+    fun getUserById(userId: Long): User {
+        return userRepository.findById(userId)
+            .orElseThrow { RuntimeException("유저를 찾을 수 없습니다. ID: $userId") }
+    }
+
 }
 
