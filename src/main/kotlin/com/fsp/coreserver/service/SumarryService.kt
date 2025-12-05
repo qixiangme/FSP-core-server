@@ -8,7 +8,7 @@ import com.fsp.coreserver.dto.Role
 import com.fsp.coreserver.dto.SummaryRequest
 import com.fsp.coreserver.dto.SummaryResponse
 import com.fsp.coreserver.repository.ConversationRepository
-import com.fsp.coreserver.repository.SumarryRepository
+import com.fsp.coreserver.repository.SummaryRepository
 import com.fsp.coreserver.service.ai.AiServiceFacade
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
@@ -17,7 +17,7 @@ import java.util.UUID
 @Service
 class SumarryService(
     private val aiService: AiServiceFacade,
-    private val sumarryRepostiroy: SumarryRepository,
+    private val sumarryRepostiroy: SummaryRepository,
     private val userService: UserService
 ){
 
@@ -45,8 +45,6 @@ class SumarryService(
         return SummaryResponse(
             id = summary.id,
             content = summary.content,
-            userId = user.id,
-            userName = user.name,
             createdAt = summary.createdAt.toString()
         )
     }

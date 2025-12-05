@@ -6,7 +6,5 @@ data class SummaryRequest(
 data class SummaryResponse(
     val id: Long,
     val content: String,
-    val userId: Long,
-    val userName: String,
     val createdAt: String
 )

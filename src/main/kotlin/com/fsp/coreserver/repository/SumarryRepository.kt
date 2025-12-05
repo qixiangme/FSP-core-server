@@ -4,6 +4,6 @@ import com.fsp.coreserver.domain.Summary
 import com.fsp.coreserver.domain.User
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface SumarryRepository : JpaRepository<Summary, Long> {
-    fun user(user: User): MutableList<Summary>
+interface SummaryRepository : JpaRepository<Summary, Long> {
+    fun findByUser(user: User): MutableList<Summary>
 }

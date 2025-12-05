@@ -16,14 +16,6 @@ class PoemController(
     private val aiServiceFacade: AiServiceFacade,
     private val conversationService: ConversationService
 ) {
-
-    // ----------------- DTO -----------------
-    data class ElaborateRequest(val text: String, val sessionId: String?)
-    // DTO 수정
-    data class SummarizeRequest(val conversation: List<Map<String, String>>
-    )
-
-
     // ----------------- 시 생성 / 조회 -----------------
     @PostMapping()
     fun createPoem(@RequestBody request: PoemRequest): ResponseEntity<PoemResponse> {
