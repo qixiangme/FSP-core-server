@@ -19,14 +19,14 @@ open class SecurityConfig {
                     // User API - 인증 불필요
                     .requestMatchers("/users/**").permitAll()
 
-                    // Poem API - 모두 허용 (개발용)
-                    .requestMatchers("/poem/**").permitAll()
-
-                    // Community API - 모두 허용 (개발용)
-                    .requestMatchers("/communities/**").permitAll()
-
-                    // H2 Console
-                    .requestMatchers("/h2-console/**").permitAll()
+//                    // Poem API - 모두 허용 (개발용)
+//                    .requestMatchers("/poem/**").permitAll()
+//
+//                    // Community API - 모두 허용 (개발용)
+//                    .requestMatchers("/communities/**").permitAll()
+//
+//                    // H2 Console
+//                    .requestMatchers("/h2-console/**").permitAll()
 
                     // 나머지는 인증 필요
                     .anyRequest().authenticated()

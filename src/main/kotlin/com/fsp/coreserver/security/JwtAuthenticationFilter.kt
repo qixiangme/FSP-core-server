@@ -13,15 +13,15 @@ import org.springframework.web.filter.OncePerRequestFilter
 class JwtAuthenticationFilter(private val jwtUtil: JwtUtil) : OncePerRequestFilter() {
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
-        // ✅ 모든 요청에 대해 필터 적용 안함 (개발용)
-        return true
+//        // ✅ 모든 요청에 대해 필터 적용 안함 (개발용)
+//        return true
+//
+         val path = request.requestURI
+         return path.startsWith("/users/") ||
+                path.startsWith("/poem/") ||
+                path.startsWith("/communities/") ||
+                path.startsWith("/h2-console")
 
-        // 또는 특정 경로만 제외
-        // val path = request.requestURI
-        // return path.startsWith("/users/") ||
-        //        path.startsWith("/poem/") ||
-        //        path.startsWith("/communities/") ||
-        //        path.startsWith("/h2-console")
     }
 
     override fun doFilterInternal(
