@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain
 open class SecurityConfig {
 
     @Bean
-    open fun filterChain(http: HttpSecurity): SecurityFilterChain {
+    open fun filterChain(http: HttpSecurity, jwtAuthenticationFilter: JwtAuthenticationFilter): SecurityFilterChain {
         http
             .csrf { it.disable() }
             .authorizeHttpRequests { auth ->
@@ -31,6 +31,7 @@ open class SecurityConfig {
                     // 나머지는 인증 필요
                     .anyRequest().authenticated()
             }
+            .addFilterBefore(jwtAuthenticationFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter::class.java)
             .headers { it.frameOptions { frameOptions -> frameOptions.disable() } }
 
         return http.build()

@@ -18,8 +18,6 @@ class JwtAuthenticationFilter(private val jwtUtil: JwtUtil) : OncePerRequestFilt
 //
          val path = request.requestURI
          return path.startsWith("/users/") ||
-                path.startsWith("/poem/") ||
-                path.startsWith("/communities/") ||
                 path.startsWith("/h2-console")
 
     }

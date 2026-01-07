@@ -9,10 +9,10 @@ data class CommunityRequest(
 )
 
 data class CommunityResponse(
-    val id: Long,
-    val title: String,
-    val author: String,
-    val content: String,
-    val likes: Int,
-    val hashtags: List<String>
+    val id: Long = 0L,
+    val title: String = "",
+    val author: String= "",
+    val content: String = "",
+    val likes: Int = 0,
+    val hashtags: List<String> = emptyList()
 )
