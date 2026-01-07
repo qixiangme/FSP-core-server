@@ -1,6 +1,7 @@
 package com.fsp.coreserver.conversation
 
 import com.fsp.coreserver.ai.AiServiceFacade
+import com.fsp.coreserver.conversation.enum.Role
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -27,10 +28,8 @@ class ConversationService(
         conversationRepository.save(
             Chat(sessionId = resolvedSessionId, role = Role.USER, content = request.content)
         )
-
         // 3️⃣ AI 서버 호출
         val aiResponse = aiService.elaborateText(request.content)
-
         // 4️⃣ AI 응답 저장
         conversationRepository.save(
             Chat(sessionId = resolvedSessionId, role = Role.ASSISTANT, content = aiResponse)

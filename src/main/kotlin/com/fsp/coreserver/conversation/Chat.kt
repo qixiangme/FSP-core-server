@@ -1,5 +1,6 @@
 package com.fsp.coreserver.conversation
 
+import com.fsp.coreserver.conversation.enum.Role
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType

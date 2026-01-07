@@ -1,5 +1,6 @@
 package com.fsp.coreserver.conversation
 
+import com.fsp.coreserver.conversation.enum.Role
 import com.fsp.coreserver.poem.Poem
 
 data class ChatMessageRequest(
