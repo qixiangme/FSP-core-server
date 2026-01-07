@@ -7,6 +7,6 @@ class AiServiceFacade(
     private val aiProxyService: AiProxyService
 ) {
     fun elaborateText(text: String): String = aiProxyService.elaborate(text)
-    fun summarizeConversation(conversation: String): String =
+    fun summarizeConversation(conversation: List<Map<String, String>>): String =
         aiProxyService.summarize(conversation)
 }

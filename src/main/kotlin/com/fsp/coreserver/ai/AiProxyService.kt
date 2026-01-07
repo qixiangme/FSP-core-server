@@ -15,10 +15,10 @@ class AiProxyService(
             .block() ?: "AI 응답 없음"
     }
 
-    fun summarize(conversation: String): String {
+    fun summarize(conversation: List<Map<String, String>>): String {
         return webClient.post()
             .uri("http://aiserver:8000/api/summarize")
-            .bodyValue(mapOf("conversation" to conversation))
+            .bodyValue(conversation)
             .retrieve()
             .bodyToMono(String::class.java)
             .block() ?: "AI 응답 없음"

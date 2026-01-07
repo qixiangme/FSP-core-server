@@ -5,6 +5,7 @@ import com.fsp.coreserver.conversation.Chat
 import com.fsp.coreserver.poem.PoemController
 import com.fsp.coreserver.conversation.summary.Summary
 import com.fsp.coreserver.conversation.ConversationService
+import com.fsp.coreserver.conversation.summary.SumarryRepository
 import com.fsp.coreserver.poem.PoemService
 import com.fsp.coreserver.user.UserService
 import org.springframework.data.jpa.repository.JpaRepository
@@ -22,7 +23,8 @@ class ConversationController(
     private val conversationService: ConversationService,
     private val poemService: PoemService,
     private val aiServiceFacade: AiServiceFacade,
-    private val userService: UserService
+    private val userService: UserService,
+    private val summaryRepository: SumarryRepository
 ) {
     // ----------------- elaborate -----------------
     @PostMapping("/{userId}/{poemId}/elaborate")
@@ -63,18 +65,12 @@ class ConversationController(
 
         // Summary 엔티티 저장
         val user = userService.getUserById(userId) // User 엔티티 조회
-        val summary = Summary(
-            content = summaryContent,
-            user = user
+        val summary = summaryRepository.save(
+            Summary(
+                id = user.id,
+                content = summaryContent,
+                user = user)
         )
-            .save(summary) // SummaryRepository 필요
-
-        // 시스템 응답도 대화 누적 (ConversationService 사용)
-        conversationService.generatedChat(
-            sessionId = request.,
-            messages = conversation + mapOf("role" to "assistant", "content" to summaryContent)
-        )
-
         return ResponseEntity.ok(summaryContent)
     }
 

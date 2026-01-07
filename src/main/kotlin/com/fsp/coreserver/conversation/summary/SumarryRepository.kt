@@ -5,5 +5,4 @@ import com.fsp.coreserver.user.User
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface SumarryRepository : JpaRepository<Summary, Long> {
-    fun user(user: User): MutableList<Summary>
 }
