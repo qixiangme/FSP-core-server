@@ -47,9 +47,3 @@ class PoemController(
 
 }
 
-interface PoemRepository: JpaRepository<Poem, Long> {
-    fun findByAuthor(author: String): Optional<List<Poem>>
-    fun findByTitle(title: String): Optional<List<Poem>>
-    fun existsByTitle(title: String): Boolean
-    fun existsByAuthor(author: String): Boolean
-}
