@@ -1,12 +1,11 @@
 package com.fsp.coreserver.service
 
-import com.fsp.coreserver.domain.User
-import com.fsp.coreserver.dto.LoginRequest
-import com.fsp.coreserver.dto.SignUpRequest
-import com.fsp.coreserver.repository.UserRepository
+import com.fsp.coreserver.user.User
+import com.fsp.coreserver.user.LoginRequest
+import com.fsp.coreserver.user.SignUpRequest
+import com.fsp.coreserver.user.UserRepository
 import com.fsp.coreserver.security.JwtUtil
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.security.Keys
+import com.fsp.coreserver.user.UserService
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -14,8 +13,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import java.nio.charset.StandardCharsets
-import kotlin.math.log
 
 @SpringBootTest
 @Transactional

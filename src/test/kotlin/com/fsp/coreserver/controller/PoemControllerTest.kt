@@ -1,8 +1,9 @@
 package com.fsp.coreserver.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fsp.coreserver.dto.PoemRequest
-import com.fsp.coreserver.repository.PoemRepository
+import com.fsp.coreserver.poem.PoemRequest
+import com.fsp.coreserver.poem.Poem
+import com.fsp.coreserver.poem.PoemRepository
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -49,7 +50,7 @@ open class PoemControllerTest {
     fun `시 목록 조회 성공`() {
         // given: 테스트 데이터 삽입
         poemRepository.save(
-            com.fsp.coreserver.domain.Poem(
+            Poem(
                 title = "시 제목",
                 author = "작가",
                 content = "내용"

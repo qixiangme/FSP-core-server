@@ -1,8 +1,9 @@
 package com.fsp.coreserver.service
 
-import com.fsp.coreserver.domain.Community
-import com.fsp.coreserver.dto.CommunityRequest
-import com.fsp.coreserver.repository.CommunityRepository
+import com.fsp.coreserver.community.Community
+import com.fsp.coreserver.community.CommunityRequest
+import com.fsp.coreserver.community.CommunityRepository
+import com.fsp.coreserver.community.CommunityService
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach

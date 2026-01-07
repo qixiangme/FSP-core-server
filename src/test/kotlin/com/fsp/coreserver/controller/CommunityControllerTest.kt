@@ -1,9 +1,9 @@
 package com.fsp.coreserver.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fsp.coreserver.domain.Community
-import com.fsp.coreserver.dto.CommunityRequest
-import com.fsp.coreserver.repository.CommunityRepository
+import com.fsp.coreserver.community.Community
+import com.fsp.coreserver.community.CommunityRequest
+import com.fsp.coreserver.community.CommunityRepository
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

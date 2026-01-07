@@ -1,6 +1,7 @@
 package com.fsp.coreserver.repository
 
-import com.fsp.coreserver.domain.Community
+import com.fsp.coreserver.community.CommunityRepository
+import com.fsp.coreserver.community.Community
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

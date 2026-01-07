@@ -1,6 +1,7 @@
 package com.fsp.coreserver.repository
 
-import com.fsp.coreserver.domain.User
+import com.fsp.coreserver.user.User
+import com.fsp.coreserver.user.UserRepository
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

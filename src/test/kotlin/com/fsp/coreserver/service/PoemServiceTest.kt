@@ -1,8 +1,9 @@
 package com.fsp.coreserver.service
 
-import com.fsp.coreserver.domain.Poem
-import com.fsp.coreserver.dto.PoemRequest
-import com.fsp.coreserver.repository.PoemRepository
+import com.fsp.coreserver.poem.Poem
+import com.fsp.coreserver.poem.PoemRequest
+import com.fsp.coreserver.poem.PoemRepository
+import com.fsp.coreserver.poem.PoemService
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
