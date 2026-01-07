@@ -33,12 +33,16 @@ class ConversationController(
     ): ResponseEntity<String> {
         val poem = poemService.getPoemDetail(poemId) // 필요시 DB 내용과 함께 사용 가능
         // AI 서버 호출 및 대화 누적
-        val aiResult = conversationService.generatedChat(
+        val chatReq = ChatMessageRequest(
             sessionId =  request.sessionId,
-            userMessage = request.text,
+            role = Role.USER,
+            content = request.text,
             poem = poem
         )
-        return ResponseEntity.ok(aiResult)
+        val aiResult = conversationService.generatedChat(
+        chatReq
+        )
+        return ResponseEntity.ok(aiResult.content)
     }
 
     // ----------------- summarize -----------------
@@ -74,11 +78,4 @@ class ConversationController(
         return ResponseEntity.ok(summaryContent)
     }
 
-
-    // ----------------- 대화 초기화 -----------------
-    @PostMapping("/{id}/clearConversation")
-    fun clearConversation(@PathVariable id: Long): ResponseEntity<String> {
-        conversationService.clearConversation(id)
-        return ResponseEntity.ok("Conversation cleared for poem $id")
-    }
 }
