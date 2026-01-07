@@ -1,43 +1,36 @@
 package com.fsp.coreserver.conversation.summary
 
+import com.fsp.coreserver.ai.AiServiceFacade
 import com.fsp.coreserver.user.UserService
 import jakarta.transaction.Transactional
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import kotlin.Long
 
 @Service
 class SumarryService(
     private val aiService: AiServiceFacade,
-    private val sumarryRepostiroy: SumarryRepository,
+    private val summaryRepostiroy: SumarryRepository,
     private val userService: UserService
 ){
 
     @Transactional
     fun generateSummary(request: SummaryRequest): SummaryResponse {
-        // 1️⃣ JWT 또는 SecurityContext에서 userId 추출
-        val user = userService.getUserById(request.userId)
-        // 2️⃣ conversation 리스트를 하나의 문자열로 합치기
-        val combinedContent = request.conversation.joinToString(separator = "\n") { msg ->
-            "[${msg.role}] ${msg.content}"
-        }
+        // AI 서버 호출 (누적된 대화를 기반으로 요약)
+        val user = userService.getUserById(request.userId) // User 엔티티 조회
 
-        // 3️⃣ AI 서버 호출 (요약)
-        val summaryContent = aiService.summarizeConversation(combinedContent)
+        val summaryContent = aiService.summarizeConversation(request.conversation)
 
-        // 4️⃣ Summary 엔티티 생성 및 저장
-        val summary = sumarryRepostiroy.save(
+        // Summary 엔티티 저장
+        val summary = summaryRepostiroy.save(
             Summary(
                 content = summaryContent,
-                user = user
-            )
+                user = user)
         )
-
-        // 5️⃣ Response DTO 반환
         return SummaryResponse(
-            id = summary.id,
-            content = summary.content,
+            content = summaryContent,
             userId = user.id,
             userName = user.name,
-            createdAt = summary.createdAt.toString()
         )
     }
 
