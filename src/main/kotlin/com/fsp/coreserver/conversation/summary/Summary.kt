@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "summary")
-data class Summary(
+class Summary(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 

@@ -12,7 +12,7 @@ import jakarta.persistence.Table
 
 @Entity
 @Table
-data class Chat(
+class Chat(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
