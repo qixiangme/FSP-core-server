@@ -29,8 +29,8 @@ class SumarryService(
         )
         return SummaryResponse(
             content = summaryContent,
-            userId = user.id,
-            userName = user.name,
+            userId = user.getId(),
+            userName = user.getName(),
         )
     }
 

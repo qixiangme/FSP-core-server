@@ -20,8 +20,8 @@ class UserService(
             name = request.name
         )
         userRepository.save(user)
-        val accessToken = jwtUtil.generateToken(user.email)
-        val refreshToken = jwtUtil.generateToken(user.email)
+        val accessToken = jwtUtil.generateToken(user.getEmail())
+        val refreshToken = jwtUtil.generateToken(user.getEmail())
 
         return LoginResponse(accessToken, refreshToken)
     }
@@ -29,11 +29,13 @@ class UserService(
     fun login(request: LoginRequest): LoginResponse {
         val user = userRepository.findByEmail(email = request.email)
             .orElseThrow { RuntimeException("이메일이 존재하지 않습니다.") }
-        if(!passwordEncoder.matches(request.password,user.password)){
+
+        if(!passwordEncoder.matches(request.password,user.getPassword())){
             throw RuntimeException("비밀번호가 일치하지 않습니다.")
         }
-        val accessToken = jwtUtil.generateToken(user.email)
-        val refreshToken = jwtUtil.generateToken(user.email)
+
+        val accessToken = jwtUtil.generateToken(user.getEmail())
+        val refreshToken = jwtUtil.generateToken(user.getEmail())
 
         return LoginResponse(accessToken, refreshToken)
     }
