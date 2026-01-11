@@ -18,8 +18,4 @@ class Comment(
     val content : String,
 
 
-) {
-
-    constructor() : this(0, "", "")
-
-}
+)

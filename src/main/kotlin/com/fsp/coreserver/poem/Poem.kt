@@ -18,6 +18,3 @@ import jakarta.persistence.Id
     @Column(nullable = false,columnDefinition = "TEXT")
     val content : String,
 )
-{
-     constructor() : this(0, "", "", "")
-}

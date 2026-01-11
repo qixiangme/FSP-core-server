@@ -33,6 +33,4 @@ import jakarta.persistence.JoinColumn
     )
     @Column(name = "hashtag")
     val hashtags: List<String> = emptyList()
-) {
-    constructor() : this(0, "", "", "", 0, emptyList())
-}
+)
