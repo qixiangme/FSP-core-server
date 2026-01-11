@@ -31,26 +31,19 @@ class CommunityService(
         val community = communityRepository.findById(id)
             .orElseThrow { IllegalArgumentException("Community not found with id: $id") }
 
-        val updated = Community(
-            id = community.id,
-            title = community.title,
-            author = community.author,
-            content = community.content,
-            likes = community.likes + 1,
-            hashtags = community.hashtags
-        )
+        community.like()
 
-        val saved = communityRepository.save(updated)
+        val saved = communityRepository.save(community)
         return toResponse(saved)
     }
 
 
     private fun toResponse(community: Community) = CommunityResponse(
-        id = community.id,
-        title = community.title,
-        author = community.author,
-        content = community.content,
-        likes = community.likes,
-        hashtags = community.hashtags.toList()
+        id = community.getId(),
+        title = community.getTitle(),
+        author = community.getAuthor(),
+        content = community.getContent(),
+        likes = community.getLikes(),
+        hashtags = community.getHashtags().toList()
     )
 }
