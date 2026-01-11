@@ -15,17 +15,31 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "summary")
 class Summary(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private var id: Long = 0,
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    val content: String = "",
+    private var content: String = "",
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    val user: User,
+    private var user: User,
 
     @Column(nullable = false, updatable = false)
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    private var createdAt: LocalDateTime = LocalDateTime.now()
 
-)
+) {
+
+    // 읽기 전용 getter
+    fun getId(): Long = id
+    fun getContent(): String = content
+    fun getUser(): User = user
+    fun getCreatedAt(): LocalDateTime = createdAt
+
+    // content는 필요 시 수정 가능
+    fun updateContent(newContent: String) {
+        content = newContent
+    }
+}
