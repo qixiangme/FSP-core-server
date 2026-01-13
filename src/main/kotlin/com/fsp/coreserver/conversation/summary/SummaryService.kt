@@ -6,9 +6,9 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
-class SumarryService(
+class SummaryService(
     private val aiService: AiServiceFacade,
-    private val summaryRepostiroy: SummaryRepository,
+    private val summaryRepository: SummaryRepository,
     private val userService: UserService
 ){
 
@@ -20,7 +20,7 @@ class SumarryService(
         val summaryContent = aiService.summarizeConversation(request.conversation)
 
         // Summary 엔티티 저장
-        val summary = summaryRepostiroy.save(
+        val summary = summaryRepository.save(
             Summary(
                 content = summaryContent,
                 user = user)

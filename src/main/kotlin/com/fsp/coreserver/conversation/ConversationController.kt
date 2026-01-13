@@ -2,7 +2,7 @@ package com.fsp.coreserver.conversation
 
 import com.fsp.coreserver.ai.AiServiceFacade
 import com.fsp.coreserver.conversation.summary.SummaryRepository
-import com.fsp.coreserver.conversation.summary.SumarryService
+import com.fsp.coreserver.conversation.summary.SummaryService
 import com.fsp.coreserver.conversation.summary.SummaryRequest
 import com.fsp.coreserver.conversation.summary.SummaryResponse
 import com.fsp.coreserver.poem.PoemService
@@ -22,7 +22,7 @@ class ConversationController(
     private val aiServiceFacade: AiServiceFacade,
     private val userService: UserService,
     private val summaryRepository: SummaryRepository,
-    private val summaryService : SumarryService
+    private val summaryService : SummaryService
 ) {
     // ----------------- elaborate -----------------
     //TODO chatMessageResponse를 Elaborate로 변경
