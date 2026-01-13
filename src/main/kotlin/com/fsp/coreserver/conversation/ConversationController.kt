@@ -1,19 +1,13 @@
 package com.fsp.coreserver.conversation
 
 import com.fsp.coreserver.ai.AiServiceFacade
-import com.fsp.coreserver.conversation.Chat
-import com.fsp.coreserver.poem.PoemController
-import com.fsp.coreserver.conversation.summary.Summary
-import com.fsp.coreserver.conversation.ConversationService
-import com.fsp.coreserver.conversation.summary.SumarryRepository
+import com.fsp.coreserver.conversation.summary.SummaryRepository
 import com.fsp.coreserver.conversation.summary.SumarryService
 import com.fsp.coreserver.conversation.summary.SummaryRequest
 import com.fsp.coreserver.conversation.summary.SummaryResponse
 import com.fsp.coreserver.poem.PoemService
 import com.fsp.coreserver.user.UserService
-import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Repository
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -27,7 +21,7 @@ class ConversationController(
     private val poemService: PoemService,
     private val aiServiceFacade: AiServiceFacade,
     private val userService: UserService,
-    private val summaryRepository: SumarryRepository,
+    private val summaryRepository: SummaryRepository,
     private val summaryService : SumarryService
 ) {
     // ----------------- elaborate -----------------

@@ -1,6 +1,6 @@
 package com.fsp.coreserver.repository
 
-import com.fsp.coreserver.conversation.summary.SumarryRepository
+import com.fsp.coreserver.conversation.summary.SummaryRepository
 import com.fsp.coreserver.conversation.summary.Summary
 import com.fsp.coreserver.user.User
 import jakarta.persistence.EntityManagerFactory
@@ -10,12 +10,12 @@ import org.hibernate.SessionFactory
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.boot.test.context.SpringBootTest
+
 @DataJpaTest
 @Transactional
 class SummaryRepositoryTest(
 
-    @Autowired val summaryRepository: SumarryRepository,
+    @Autowired val summaryRepository: SummaryRepository,
     @Autowired val entityManagerFactory: EntityManagerFactory
 
 ) {

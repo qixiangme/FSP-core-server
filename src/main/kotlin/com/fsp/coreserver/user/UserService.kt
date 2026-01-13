@@ -35,7 +35,7 @@ class UserService(
         }
 
         val accessToken = jwtUtil.generateToken(user.getEmail())
-        val refreshToken = jwtUtil.generateToken(user.getEmail())
+        val refreshToken = jwtUtil.generateRefreshToken(user.getEmail())
 
         return LoginResponse(accessToken, refreshToken)
     }

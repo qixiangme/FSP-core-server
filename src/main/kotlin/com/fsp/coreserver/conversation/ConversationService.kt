@@ -37,7 +37,7 @@ class ConversationService(
         return ChatMessageResponse(
             sessionId = resolvedSessionId,
             role = Role.ASSISTANT,
-            content = content
+            content = aiResponse
         )
     }
 }

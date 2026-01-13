@@ -8,4 +8,5 @@ interface PoemRepository: JpaRepository<Poem, Long> {
     fun findByTitle(title: String): Optional<List<Poem>>
     fun existsByTitle(title: String): Boolean
     fun existsByAuthor(author: String): Boolean
+    fun existsByTitleAndAuthor(title: String, author: String): Boolean
 }
