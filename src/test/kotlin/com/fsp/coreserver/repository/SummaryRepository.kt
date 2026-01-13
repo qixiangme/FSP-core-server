@@ -9,9 +9,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.hibernate.SessionFactory
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.context.SpringBootTest
-
-@SpringBootTest
+@DataJpaTest
 @Transactional
 class SummaryRepositoryTest(
 
@@ -51,14 +51,14 @@ class SummaryRepositoryTest(
         stats.clear()
         stats.isStatisticsEnabled = true
 
-        val summaries = summaryRepository.findAll()
+        val summaries = summaryRepository.findAllWithUser()
 
         summaries.forEach {
             it.getUser().getName()
         }
         //then
         val queryCount = stats.prepareStatementCount
-        assertThat(queryCount).isGreaterThan(1)
+        assertThat(queryCount).isEqualTo(1)
         }
 
     }
