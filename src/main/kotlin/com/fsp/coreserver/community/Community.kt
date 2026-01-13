@@ -12,19 +12,19 @@ import jakarta.persistence.JoinColumn
 @Entity
     class Community(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    private var id: Long = 0,
 
     @Column(nullable = false)
-    val title: String,
+    private var title: String,
 
     @Column(nullable = false)
-    val author: String,
+    private var author: String,
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    val content: String,
+    private var content: String,
 
     @Column(nullable = false)
-    val likes: Int = 0,
+    private var likes: Int = 0,
 
     @ElementCollection
     @CollectionTable(
@@ -32,7 +32,19 @@ import jakarta.persistence.JoinColumn
         joinColumns = [JoinColumn(name = "community_id")]
     )
     @Column(name = "hashtag")
-    val hashtags: List<String> = emptyList()
-) {
-    constructor() : this(0, "", "", "", 0, emptyList())
-}
+    private var hashtags: List<String> = emptyList()
+){
+    fun getId(): Long = id
+    fun getTitle(): String = title
+    fun getAuthor(): String = author
+    fun getLikes(): Int = likes
+    fun getHashtags(): List<String> = hashtags
+    fun getContent(): String = content
+
+    fun like() {
+        likes += 1
+    }
+    fun unlike() {
+        if (likes > 0) likes -= 1
+    }
+    }

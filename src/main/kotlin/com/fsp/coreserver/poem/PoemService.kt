@@ -7,7 +7,7 @@ class PoemService(
     private val poemRepositorty: PoemRepository,
 ){
     fun createPoem(request: PoemRequest): PoemResponse {
-        if(poemRepositorty.existsByTitle(request.title) && poemRepositorty.existsByAuthor(request.author)){
+        if(poemRepositorty.existsByTitleAndAuthor(request.title ,request.author)){
             throw RuntimeException("이미 존재하는 시입니다.")
         }
         val poem = Poem(
@@ -18,10 +18,10 @@ class PoemService(
         val saved = poemRepositorty.save(poem)
 
         return PoemResponse(
-            id = saved.id,
-            title = saved.title,
-            content = saved.content,
-            author = saved.author
+            id = saved.getId(),
+            title = saved.getTitle(),
+            content = saved.getContent(),
+            author = saved.getAuthor()
         )
     }
 

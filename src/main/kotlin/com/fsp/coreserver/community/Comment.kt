@@ -9,17 +9,15 @@ import jakarta.persistence.Id
 @Entity
 class Comment(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Long = 0,
+    private var id : Long = 0,
 
     @Column(nullable = false)
-    val author : String,
+    private var author : String,
 
     @Column(nullable = false,columnDefinition = "TEXT")
-    val content : String,
-
-
-) {
-
-    constructor() : this(0, "", "")
-
+    private var content : String,
+){
+    fun getId() : Long = id
+    fun getAuthor(): String = author
+    fun getContent(): String  = content
 }

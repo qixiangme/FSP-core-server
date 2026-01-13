@@ -10,17 +10,33 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 
-@Entity
-@Table
-data class Chat(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
 
-    val sessionId: String,
+@Entity
+@Table(name = "chat")
+class Chat(
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private var id: Long = 0,
+
+    private var sessionId: String,
 
     @Enumerated(EnumType.STRING)
-    val role: Role, // "user" / "ai"
+    private var role: Role, // "user" / "ai"
 
     @Column(columnDefinition = "TEXT")
-    val content: String
-)
+    private var content: String
+) {
+    // 읽기 전용 getter
+    fun getId(): Long = id
+    fun getSessionId(): String = sessionId
+    fun getRole(): Role = role
+    fun getContent(): String = content
+
+    // content는 필요하면 업데이트 가능
+    fun updateContent(newContent: String) {
+        content = newContent
+    }
+
+    // sessionId와 role은 외부에서 변경할 필요가 거의 없으므로 setter 없음
+}

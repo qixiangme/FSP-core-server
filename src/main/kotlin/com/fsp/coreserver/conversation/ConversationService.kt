@@ -19,9 +19,9 @@ class ConversationService(
         val resolvedSessionId = request.sessionId ?: UUID.randomUUID().toString()
         val content = """
             [시]
-             제목:${request.poem.title}
-             작가:${request.poem.author}
-             본문:${request.poem.content}
+             제목:${request.poem.getTitle()}
+             작가:${request.poem.getAuthor()}
+             본문:${request.poem.getContent()}
             느낀점 : ${request.content}
         """.trimIndent()
         // 2️⃣ 유저 메시지 저장
@@ -37,7 +37,7 @@ class ConversationService(
         return ChatMessageResponse(
             sessionId = resolvedSessionId,
             role = Role.ASSISTANT,
-            content = content
+            content = aiResponse
         )
     }
 }

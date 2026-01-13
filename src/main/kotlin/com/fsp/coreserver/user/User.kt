@@ -10,18 +10,32 @@ import jakarta.persistence.Table
 @Table(name = "USERS")
 @Entity
 class User(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
 
-    @Column(unique = true, nullable =  false)
-    val email: String,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private var id: Long = 0,
 
-    @Column(nullable =  false)
-    val password: String,
+    @Column(unique = true, nullable = false)
+    private var email: String,
 
     @Column(nullable = false)
-    val name:String,
-    )
-{
-    constructor() : this(0, "", "", "")
+    private var password: String,
+
+    @Column(nullable = false)
+    private var name: String,
+) {
+
+    // id는 변경 불가
+    fun getId(): Long = id
+
+    fun getEmail(): String = email
+    fun getName(): String = name
+    fun getPassword(): String = password
+
+    // password 변경만 함수로 허용
+    fun updatePassword(newPassword: String) {
+        password = newPassword
+    }
+
+    fun checkPassword(input: String): Boolean = password == input
 }

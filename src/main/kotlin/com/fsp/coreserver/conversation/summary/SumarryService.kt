@@ -3,14 +3,12 @@ package com.fsp.coreserver.conversation.summary
 import com.fsp.coreserver.ai.AiServiceFacade
 import com.fsp.coreserver.user.UserService
 import jakarta.transaction.Transactional
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import kotlin.Long
 
 @Service
 class SumarryService(
     private val aiService: AiServiceFacade,
-    private val summaryRepostiroy: SumarryRepository,
+    private val summaryRepostiroy: SummaryRepository,
     private val userService: UserService
 ){
 
@@ -29,8 +27,8 @@ class SumarryService(
         )
         return SummaryResponse(
             content = summaryContent,
-            userId = user.id,
-            userName = user.name,
+            userId = user.getId(),
+            userName = user.getName(),
         )
     }
 

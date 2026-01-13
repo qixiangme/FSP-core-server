@@ -34,8 +34,8 @@ open class UserServiceTest(
 
         val found = userRepository.findByEmail("service@test.com")
         assertTrue(found.isPresent)
-        assertEquals("ServiceUser", found.get().name)
-        assertNotEquals("1234", found.get().password) // 암호화 확인
+        assertEquals("ServiceUser", found.get().getName())
+        assertNotEquals("1234", found.get().getPassword()) // 암호화 확인
     }
 
     @Test
