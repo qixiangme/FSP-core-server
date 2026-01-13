@@ -76,7 +76,7 @@ open class CommunityControllerTest {
         )
 
         // when & then
-        mockMvc.perform(get("/communities/${community.id}"))
+        mockMvc.perform(get("/communities/${community.getId()}"))
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.title").value("단건 글"))
             .andExpect(jsonPath("$.author").value("C"))
@@ -90,7 +90,7 @@ open class CommunityControllerTest {
         )
 
         // when & then
-        mockMvc.perform(post("/communities/${community.id}/like"))
+        mockMvc.perform(post("/communities/${community.getId()}/like"))
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.likes").value(1))
     }

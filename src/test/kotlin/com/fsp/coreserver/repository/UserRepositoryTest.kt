@@ -21,7 +21,7 @@ open class UserRepositoryTest(
 
         val found = userRepository.findByEmail("repo@test.com")
         assertTrue(found.isPresent)
-        assertEquals("RepoUser", found.get().name)
+        assertEquals("RepoUser", found.get().getName())
     }
 
     @Test

@@ -22,9 +22,9 @@ open class CommunityRepositoryTest @Autowired constructor(
         )
 
         val saved = communityRepository.save(community)
-        val found = communityRepository.findById(saved.id).get()
+        val found = communityRepository.findById(saved.getId()).get()
 
-        assertEquals(saved.title, found.title)
-        assertEquals(saved.hashtags.size, found.hashtags.size)
+        assertEquals(saved.getTitle(), found.getTitle())
+        assertEquals(saved.getHashtags().size, found.getHashtags().size)
     }
 }

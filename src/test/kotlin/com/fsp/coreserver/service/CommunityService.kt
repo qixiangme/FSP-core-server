@@ -39,9 +39,9 @@ open class CommunityServiceTest(
         // then
         val found = communityRepository.findById(saved.id)
         assertTrue(found.isPresent)
-        assertEquals("서비스 테스트 글", found.get().title)
-        assertEquals("테스트 작성자", found.get().author)
-        assertEquals(2, found.get().hashtags.size)
+        assertEquals("서비스 테스트 글", found.get().getTitle())
+        assertEquals("테스트 작성자", found.get().getAuthor())
+        assertEquals(2, found.get().getHashtags().size)
     }
 
     @Test
@@ -65,7 +65,7 @@ open class CommunityServiceTest(
         val community = communityRepository.save(Community(title = "단건 글", author = "C", content = "테스트 내용"))
 
         // when
-        val found = communityService.getCommunityById(community.id)
+        val found = communityService.getCommunityById(community.getId())
 
         // then
         assertEquals("단건 글", found.title)
@@ -78,7 +78,7 @@ open class CommunityServiceTest(
         val community = communityRepository.save(Community(title = "좋아요 테스트", author = "D", content = "내용"))
 
         // when
-        val updated = communityService.addLike(community.id)
+        val updated = communityService.addLike(community.getId())
 
         // then
         assertEquals(1, updated.likes)

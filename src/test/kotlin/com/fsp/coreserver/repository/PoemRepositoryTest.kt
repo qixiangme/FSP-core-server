@@ -20,10 +20,10 @@ open class PoemRepositoryTest {
     fun `시 저장 후 조회`(){
         val poem = Poem(title = "test", content = "test", author = "test")
         poemRepository.save(poem)
-        val found = poemRepository.findById(poem.id)
+        val found = poemRepository.findById(poem.getId())
         assertTrue(found.isPresent)
-        assertEquals("test", found.get().title)
-        assertEquals("test", found.get().author)
+        assertEquals("test", found.get().getTitle())
+        assertEquals("test", found.get().getAuthor())
     }
 
 
@@ -46,10 +46,10 @@ open class PoemRepositoryTest {
         poemRepository.save(poem)
 
         // when
-        val found = poemRepository.findAll().firstOrNull { it.title == "특별한 시" }
+        val found = poemRepository.findAll().firstOrNull { it.getTitle() == "특별한 시" }
 
         // then
         assertNotNull(found)
-        assertEquals("시인", found?.author)
+        assertEquals("시인", found?.getAuthor())
     }
 }

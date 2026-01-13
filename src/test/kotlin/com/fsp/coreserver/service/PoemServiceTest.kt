@@ -38,8 +38,8 @@ open class PoemServiceTest(
         // then
         val found = poemRepository.findById(savedPoem.id)
         assertTrue(found.isPresent)
-        assertEquals("서비스 테스트 시", found.get().title)
-        assertEquals("테스트 작가", found.get().author)
+        assertEquals("서비스 테스트 시", found.get().getTitle())
+        assertEquals("테스트 작가", found.get().getAuthor())
     }
 
     @Test
@@ -53,7 +53,7 @@ open class PoemServiceTest(
 
         // then
         assertEquals(2, poems.size)
-        assertTrue(poems.any { it.title == "시1" })
+        assertTrue(poems.any { it.getTitle() == "시1" })
     }
 
     @Test
@@ -62,10 +62,10 @@ open class PoemServiceTest(
         val poem = poemRepository.save(Poem(title = "단건시", author = "C", content = "테스트 내용"))
 
         // when
-        val found = poemService.getPoemDetail(poem.id)
+        val found = poemService.getPoemDetail(poem.getId())
 
         // then
-        assertEquals("단건시", found.title)
-        assertEquals("C", found.author)
+        assertEquals("단건시", found.getTitle())
+        assertEquals("C", found.getAuthor())
     }
 }
