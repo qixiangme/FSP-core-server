@@ -1,6 +1,6 @@
 package com.fsp.coreserver.poem
 
-import com.fsp.coreserver.ai.AiServiceFacade
+import com.fsp.coreserver.ai.py_server.AiServiceFacade
 import com.fsp.coreserver.conversation.ConversationService
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.http.ResponseEntity
