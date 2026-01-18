@@ -1,6 +1,6 @@
 package com.fsp.coreserver.conversation
 
-import com.fsp.coreserver.ai.AiServiceFacade
+import com.fsp.coreserver.ai.py_server.AiServiceFacade
 import com.fsp.coreserver.conversation.summary.SummaryRepository
 import com.fsp.coreserver.conversation.summary.SummaryService
 import com.fsp.coreserver.conversation.summary.SummaryRequest

@@ -1,6 +1,6 @@
 package com.fsp.coreserver.conversation.summary
 
-import com.fsp.coreserver.ai.AiServiceFacade
+import com.fsp.coreserver.ai.py_server.AiServiceFacade
 import com.fsp.coreserver.user.UserService
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
