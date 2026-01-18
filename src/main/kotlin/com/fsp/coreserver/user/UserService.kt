@@ -30,7 +30,8 @@ class UserService(
         val user = userRepository.findByEmail(email = request.email)
             .orElseThrow { RuntimeException("이메일이 존재하지 않습니다.") }
 
-        if(!passwordEncoder.matches(request.password,user.checkPassword())){
+
+        if(user.checkPassword(request.password)){
             throw RuntimeException("비밀번호가 일치하지 않습니다.")
         }
 
