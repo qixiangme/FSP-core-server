@@ -1,4 +1,4 @@
-package com.fsp.coreserver.ai
+package com.fsp.coreserver.ai.py_server
 
 import com.fsp.coreserver.conversation.ChatMessageResponse
 import org.springframework.stereotype.Service
