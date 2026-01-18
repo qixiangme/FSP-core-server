@@ -1,3 +1,14 @@
+package com.fsp.coreserver.community
+
+import jakarta.persistence.CollectionTable
+import jakarta.persistence.Column
+import jakarta.persistence.ElementCollection
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+
 @Entity
 class Community(
     title: String,
@@ -12,7 +23,7 @@ class Community(
         joinColumns = [JoinColumn(name = "community_id")]
     )
     @Column(name = "hashtag")
-    var hashtags: MutableList<String> = mutableListOf()
+    var hashtags: List<String> = mutableListOf()
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
