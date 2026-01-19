@@ -18,10 +18,10 @@ class PoemService(
         val saved = poemRepositorty.save(poem)
 
         return PoemResponse(
-            id = saved.getId(),
-            title = saved.getTitle(),
-            content = saved.getContent(),
-            author = saved.getAuthor()
+            id = saved.id,
+            title = saved.title,
+            content = saved.content,
+            author = saved.author
         )
     }
 

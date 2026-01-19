@@ -7,35 +7,44 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 
-@Table(name = "USERS")
 @Entity
+@Table(name = "users")
 class User(
-
+    email: String,
+    password: String,
+    name: String // 이름도 생성 시점에 필요하므로 추가
+) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var id: Long = 0,
+    val id: Long = 0
 
     @Column(unique = true, nullable = false)
-    private var email: String,
+    var email: String = email
+        private set
 
     @Column(nullable = false)
-    private var password: String,
+    private var password: String = password // 생성자 인자로 초기화
 
     @Column(nullable = false)
-    private var name: String,
-) {
+    var name: String = name
+        private set
 
-    // id는 변경 불가
-    fun getId(): Long = id
-
-    fun getEmail(): String = email
-    fun getName(): String = name
-    fun getPassword(): String = password
-
-    // password 변경만 함수로 허용
+    /**
+     * 비밀번호 변경 (암호화된 비밀번호가 들어온다고 가정)
+     */
     fun updatePassword(newPassword: String) {
-        password = newPassword
+        this.password = newPassword
     }
 
-    fun checkPassword(input: String): Boolean = password == input
+    /**
+     * 비밀번호 확인
+     */
+    fun checkPassword(input: String): Boolean = this.password == input
+
+    /**
+     * 이름 변경 기능이 필요하다면 추가
+     */
+    fun updateName(newName: String) {
+        this.name = newName
+    }
 }

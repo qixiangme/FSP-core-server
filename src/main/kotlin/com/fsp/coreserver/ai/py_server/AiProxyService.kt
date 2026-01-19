@@ -1,6 +1,6 @@
 package com.fsp.coreserver.ai.py_server
 
-import com.fsp.coreserver.conversation.ChatMessageResponse
+import com.fsp.coreserver.conversation.elaborate.ElaborateResponse
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 
@@ -17,7 +17,7 @@ class AiProxyService(
             .block() ?: "AI 응답 없음"
     }
 
-    fun summarize(conversation: List<ChatMessageResponse>): String {
+    fun summarize(conversation: List<ElaborateResponse>): String {
         return webClient.post()
             .uri("http://aiserver:8000/api/summarize")
             .bodyValue(conversation)

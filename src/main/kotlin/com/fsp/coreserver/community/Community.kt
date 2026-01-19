@@ -10,21 +10,12 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 
 @Entity
-    class Community(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var id: Long = 0,
+class Community(
+    title: String,
+    content: String,
 
-    @Column(nullable = false)
-    private var title: String,
-
-    @Column(nullable = false)
-    private var author: String,
-
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private var content: String,
-
-    @Column(nullable = false)
-    private var likes: Int = 0,
+    @Column(nullable = false, updatable = false)
+    val author: String,
 
     @ElementCollection
     @CollectionTable(
@@ -32,19 +23,35 @@ import jakarta.persistence.JoinColumn
         joinColumns = [JoinColumn(name = "community_id")]
     )
     @Column(name = "hashtag")
-    private var hashtags: List<String> = emptyList()
-){
-    fun getId(): Long = id
-    fun getTitle(): String = title
-    fun getAuthor(): String = author
-    fun getLikes(): Int = likes
-    fun getHashtags(): List<String> = hashtags
-    fun getContent(): String = content
+    var hashtags: List<String> = mutableListOf()
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0
 
+    @Column(nullable = false)
+    var title: String = title
+        private set // 본문으로 빼야 private set 설정이 가능합니다.
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    var content: String = content
+        private set
+
+    @Column(nullable = false)
+    var likes: Int = 0
+        private set
+
+    // 비즈니스 로직
     fun like() {
-        likes += 1
+        this.likes += 1
     }
+
     fun unlike() {
-        if (likes > 0) likes -= 1
+        if (this.likes > 0) this.likes -= 1
     }
+
+    fun update(newTitle: String, newContent: String) {
+        this.title = newTitle
+        this.content = newContent
     }
+}

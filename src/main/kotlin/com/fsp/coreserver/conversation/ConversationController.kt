@@ -1,13 +1,9 @@
 package com.fsp.coreserver.conversation
 
-import com.fsp.coreserver.ai.py_server.AiServiceFacade
-import com.fsp.coreserver.conversation.summary.SummaryRepository
-import com.fsp.coreserver.conversation.summary.SummaryService
-import com.fsp.coreserver.conversation.summary.SummaryRequest
-import com.fsp.coreserver.conversation.summary.SummaryResponse
-import com.fsp.coreserver.poem.PoemService
-import com.fsp.coreserver.user.UserService
+import com.fsp.coreserver.conversation.elaborate.ElaborateRequest
+import com.fsp.coreserver.conversation.elaborate.ElaborateResponse
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -15,36 +11,39 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/chat")
+@RequestMapping("/conversations")
 class ConversationController(
     private val conversationService: ConversationService,
-    private val poemService: PoemService,
-    private val aiServiceFacade: AiServiceFacade,
-    private val userService: UserService,
-    private val summaryRepository: SummaryRepository,
-    private val summaryService : SummaryService
 ) {
-    // ----------------- elaborate -----------------
-    //TODO chatMessageResponse를 Elaborate로 변경
-    @PostMapping("/{userId}/{poemId}/elaborate")
-    fun elaboratePoem(
-        @PathVariable userId: Long,
-        @PathVariable poemId: Long,
-        @RequestBody request: ChatMessageRequest
-    ): ResponseEntity<ChatMessageResponse> {
 
-        return ResponseEntity.ok(conversationService.generatedChat(request))
+    @PostMapping("/{conversationId}/elaborate")
+    fun elaborate(
+        @PathVariable conversationId: Long,
+        @RequestBody request: ElaborateRequest
+    ): ResponseEntity<ElaborateResponse> {
+
+        val enrichedRequest = request.copy(conversationId = conversationId)
+        return ResponseEntity.ok(
+            conversationService.generateChat(enrichedRequest)
+        )
     }
 
-    // ----------------- summarize -----------------
-    @PostMapping("/{userId}/{poemId}/summarize")
-    fun summarizePoem(
-        @PathVariable userId: Long,
-        @PathVariable poemId: Long,
-        @RequestBody request: SummaryRequest,
-    ): ResponseEntity<SummaryResponse> {
-        return ResponseEntity.ok(summaryService.generateSummary(request))
+    @GetMapping("/{conversationId}")
+    fun getConversation(
+        @PathVariable conversationId: Long
+    ): ResponseEntity<ConversationResponse> {
 
+        return ResponseEntity.ok(
+            conversationService.getConversation(conversationId)
+        )
     }
 
+    @PostMapping
+    fun startConversation(
+        @RequestBody conversationRequest: ConversationRequest
+    ): ResponseEntity<ConversationResponse>{
+        return ResponseEntity.ok(
+            conversationService.generateConversation(conversationRequest)
+        )
+    }
 }

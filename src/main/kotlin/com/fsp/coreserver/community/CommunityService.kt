@@ -39,11 +39,11 @@ class CommunityService(
 
 
     private fun toResponse(community: Community) = CommunityResponse(
-        id = community.getId(),
-        title = community.getTitle(),
-        author = community.getAuthor(),
-        content = community.getContent(),
-        likes = community.getLikes(),
-        hashtags = community.getHashtags().toList()
+        id = community.id,
+        title = community.title,
+        author = community.author,
+        content = community.content,
+        likes = community.likes,
+        hashtags = community.hashtags
     )
 }
