@@ -21,7 +21,7 @@ class UserService(
         )
         userRepository.save(user)
         val accessToken = jwtUtil.generateToken(user.email)
-        val refreshToken = jwtUtil.generateToken(user.email)
+        val refreshToken = jwtUtil.generateRefreshToken(user.email)
 
         return LoginResponse(accessToken, refreshToken)
     }
