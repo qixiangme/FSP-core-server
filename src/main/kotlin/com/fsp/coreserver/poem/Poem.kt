@@ -8,19 +8,17 @@ import jakarta.persistence.Id
 
 @Entity
 class Poem(
-    @Column(nullable = false)
     title: String, // 초기화를 위해 생성자 인자로 받음
-
-    @Column(nullable = false)
-    val author: String, // 불변
-
-    @Column(nullable = false, columnDefinition = "TEXT")
+    author: String, // 불변
     content: String // 초기화를 위해 생성자 인자로 받음
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
+    @Column(nullable = false)
+    var author : String = author
+        private set
     @Column(nullable = false)
     var title: String = title
         private set // 외부에서 'poem.title = ...' 금지
