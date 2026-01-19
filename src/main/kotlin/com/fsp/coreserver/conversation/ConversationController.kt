@@ -37,4 +37,13 @@ class ConversationController(
             conversationService.getConversation(conversationId)
         )
     }
+
+    @PostMapping
+    fun startConversation(
+        @RequestBody conversationRequest: ConversationRequest
+    ): ResponseEntity<ConversationResponse>{
+        return ResponseEntity.ok(
+            conversationService.generateConversation(conversationRequest)
+        )
+    }
 }
