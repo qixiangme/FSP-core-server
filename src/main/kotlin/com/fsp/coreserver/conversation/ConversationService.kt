@@ -1,6 +1,8 @@
 package com.fsp.coreserver.conversation
 
 import com.fsp.coreserver.ai.ollama.AiService
+import com.fsp.coreserver.conversation.chat.Chat
+import com.fsp.coreserver.conversation.chat.ChatResponse
 import com.fsp.coreserver.conversation.elaborate.ElaborateRequest
 import com.fsp.coreserver.conversation.elaborate.ElaborateResponse
 import com.fsp.coreserver.conversation.enum.Role
@@ -39,7 +41,8 @@ class ConversationService(
         conversation.addChat(
             Chat(
                 role = Role.USER,
-                content = request.content
+                content = request.content,
+                conversation = conversation
             )
         )
 
@@ -56,7 +59,8 @@ class ConversationService(
         conversation.addChat(
             Chat(
                 role = Role.ASSISTANT,
-                content = aiResponse
+                content = aiResponse,
+                conversation = conversation
             )
         )
 
@@ -69,12 +73,13 @@ class ConversationService(
     fun getConversation(conversationId: Long): ConversationResponse {
         val conversation = conversationRepository.findById(conversationId)
             .orElseThrow { IllegalArgumentException("Conversation not found") }
-
+        val chats = conversation.chats.map {
+            ChatResponse(it.role, it.content) }
         return ConversationResponse(
             conversation.userId,
             conversation.poemId,
             conversation.id,
-            conversation.chats
+            chats
         )
     }
 
