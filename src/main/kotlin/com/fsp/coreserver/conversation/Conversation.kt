@@ -13,9 +13,9 @@ import jakarta.persistence.Table
 @Entity
 class Conversation(
     @Column(nullable = true)
-    val userId: String,
+    val userId: Long,
     @Column(nullable = false)
-    val poemId: String
+    val poemId: Long
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +31,8 @@ class Conversation(
     val chats: List<Chat> get() = _chats.toList()
 
     // 편의 메서드: 양방향 관계를 한 번에 설정
-    fun addChat(role: Role, content: String) {
-        val chat = Chat(
-            role = role,
-            content = content
-        )
+    fun addChat(chat: Chat) {
+
         _chats.add(chat)
     }
 }
