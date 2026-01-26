@@ -16,7 +16,7 @@ class ConversationController(
     private val conversationService: ConversationService,
 ) {
 
-    @PostMapping("/{conversationId}/elaborate")
+    @PostMapping("/elaborate/{conversationId}")
     fun elaborate(
         @PathVariable conversationId: Long,
         @RequestBody request: ElaborateRequest

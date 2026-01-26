@@ -54,7 +54,7 @@ class SummaryRepositoryTest(
         val summaries = summaryRepository.findAllWithUser()
 
         summaries.forEach {
-            it.getUser().getName()
+            it.user.name
         }
         //then
         val queryCount = stats.prepareStatementCount

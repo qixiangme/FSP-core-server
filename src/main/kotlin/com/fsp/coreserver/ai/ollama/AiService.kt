@@ -15,7 +15,7 @@ class AiService(
     fun elaborate(text: String): String {
 
         val options = OllamaOptions.builder()
-            .model("gemma3:1b")
+            .model("gemma3:4b")
             .temperature(0.7)
             .build()
 
