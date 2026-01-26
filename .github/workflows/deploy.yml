@@ -13,25 +13,46 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Docker 빌드 환경 설정
+      # 2. JDK 설정 (Gradle 빌드용)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # 3. Gradle 캐시 설정 (빌드 속도 향상)
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      # 4. Gradle 빌드 (jar 생성)
+      - name: Build Spring Boot jar
+        run: ./gradlew clean build -x test
+
+      # 5. Docker 빌드 환경 설정
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # 3. DockerHub 로그인 (Secrets 사용)
+      # 6. DockerHub 로그인
       - name: Log in to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 4. 서버 이미지 빌드 & 푸시
+      # 7. Docker 이미지 빌드 & 푸시
       - name: Build and push server image
         run: |
           IMAGE_TAG=v2.0.0-${{ github.sha }}
           docker build -t qixiangme903/fsp-core-server:$IMAGE_TAG -f Dockerfile .
           docker push qixiangme903/fsp-core-server:$IMAGE_TAG
 
-      # 5. EC2 접속 후 Docker Compose 재배포
+      # 8. EC2 접속 후 Docker Compose 재배포
       - name: SSH and deploy
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -39,7 +60,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd /home/ubuntu
-            # 새 이미지 태그로 업데이트
+            cd /home/ubuntu/fsp-project
             docker-compose pull
             docker-compose up -d --remove-orphans
