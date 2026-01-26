@@ -39,7 +39,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd /home/ubuntu/fsp-project
+            cd /home/ubuntu
             # 새 이미지 태그로 업데이트
             docker-compose pull
             docker-compose up -d --remove-orphans
