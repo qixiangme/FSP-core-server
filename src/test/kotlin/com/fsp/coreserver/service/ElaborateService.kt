@@ -36,9 +36,9 @@ class OllamaElaborateTest(
 
         val prompt = """
             [시]
-            제목: ${poem.getTitle()}
-            작가: ${poem.getAuthor()}
-            본문: ${poem.getContent()}
+            제목: ${poem.title}
+            작가: ${poem.author}
+            본문: ${poem.content}
 
             느낀점: $userFeeling
         """.trimIndent()

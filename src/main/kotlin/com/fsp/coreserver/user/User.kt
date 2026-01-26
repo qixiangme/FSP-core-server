@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import org.springframework.security.crypto.password.PasswordEncoder
 
 @Entity
 @Table(name = "users")
@@ -39,7 +40,9 @@ class User(
     /**
      * 비밀번호 확인
      */
-    fun checkPassword(input: String): Boolean = this.password == input
+    fun checkPassword(input: String, passwordEncoder: PasswordEncoder): Boolean {
+        return passwordEncoder.matches(input, this.password)
+    }
 
     /**
      * 이름 변경 기능이 필요하다면 추가

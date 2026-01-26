@@ -31,7 +31,7 @@ class UserService(
             .orElseThrow { RuntimeException("이메일이 존재하지 않습니다.") }
 
 
-        if(!user.checkPassword(request.password)){
+        if(!user.checkPassword(request.password,passwordEncoder)){
             throw RuntimeException("비밀번호가 일치하지 않습니다.")
         }
 
