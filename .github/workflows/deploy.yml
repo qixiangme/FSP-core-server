@@ -28,7 +28,7 @@ jobs:
       - name: Build and push server image
         run: |
           IMAGE_TAG=v2.0.0-${{ github.sha }}
-          docker build -t qixiangme903/fsp-core-server:$IMAGE_TAG ./server
+          docker build -t qixiangme903/fsp-core-server:$IMAGE_TAG -f Dockerfile .
           docker push qixiangme903/fsp-core-server:$IMAGE_TAG
 
       # 5. EC2 접속 후 Docker Compose 재배포
