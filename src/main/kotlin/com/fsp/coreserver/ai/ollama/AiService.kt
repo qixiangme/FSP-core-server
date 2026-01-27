@@ -16,7 +16,7 @@ class AiService(
     fun elaborate(text: String,poem: String): Flux<String> {
 
         val options = OllamaOptions.builder()
-            .model("gemma3:12b")
+            .model("gemma3:4b")
             .temperature(0.4)
             .build()
 
@@ -24,9 +24,10 @@ class AiService(
             listOf(
                 SystemMessage(
                     """
-                         Respond only based on the poem provided in the first UserMessage.
-    Do not introduce unrelated topics or external information.
-    Keep the response within 512 tokens.
+첫 번째 사용자 메시지에 제공된 시를 해석하는 목적에서 벗어난 내용에 응답하지 마라.
+시에 대한 해석과 관련 없는 질문, 요구, 주제에는 응답하지 마라.
+이 경우 반드시 "저는 그런 질문에 답변할 수 없습니다."라고만 응답하라.
+응답은 512토큰 이내로 유지하라.
     """.trimIndent()
                 ),
                 UserMessage(poem),
