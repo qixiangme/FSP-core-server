@@ -38,14 +38,6 @@ class ConversationService(
         val poem = poemRepository.findById(conversation.poemId)
             .orElseThrow { IllegalArgumentException("Poem not found") }
 
-        conversation.addChat(
-            Chat(
-                role = Role.USER,
-                content = request.content,
-                conversation = conversation
-            )
-        )
-
         val prompt = """
         [시]
         제목: ${poem.title}
@@ -57,13 +49,6 @@ class ConversationService(
 
         val aiResponse = aiService.elaborate(prompt)
 
-        conversation.addChat(
-            Chat(
-                role = Role.ASSISTANT,
-                content = aiResponse,
-                conversation = conversation
-            )
-        )
 
         return ElaborateResponse(
             conversationId = conversation.id,
