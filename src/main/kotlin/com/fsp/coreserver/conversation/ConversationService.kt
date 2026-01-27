@@ -40,15 +40,15 @@ class ConversationService(
             .orElseThrow { IllegalArgumentException("Poem not found") }
 
         val prompt = """
-        [시]
         제목: ${poem.title}
         작가: ${poem.author}
         본문: ${poem.content}
-        [유저의 발화]
+        """.trimIndent()
+        val textprompt = """
         ${request.content}
     """.trimIndent()
 
-        return aiService.elaborate(prompt)
+        return aiService.elaborate(textprompt,prompt)
             .map { token ->
                 ElaborateResponse(
                     conversationId = conversation.id,
