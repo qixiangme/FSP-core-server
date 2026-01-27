@@ -51,7 +51,8 @@ class ConversationService(
         제목: ${poem.title}
         작가: ${poem.author}
         본문: ${poem.content}
-        느낀점: ${request.content}
+        [유저의 발화]
+        ${request.content}
     """.trimIndent()
 
         val aiResponse = aiService.elaborate(prompt)
