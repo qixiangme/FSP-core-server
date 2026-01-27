@@ -9,6 +9,7 @@ import com.fsp.coreserver.conversation.enum.Role
 import com.fsp.coreserver.poem.PoemRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import reactor.core.publisher.Flux
 
 //AI <-> USER 채팅 저장 로직 담당
 @Service
@@ -30,21 +31,13 @@ class ConversationService(
         return res
     }
     @Transactional
-    fun generateChat(request: ElaborateRequest): ElaborateResponse {
+    fun generateChat(request: ElaborateRequest): Flux<ElaborateResponse> {
 
         val conversation = conversationRepository.findById(request.conversationId)
             .orElseThrow { IllegalArgumentException("Conversation not found") }
 
         val poem = poemRepository.findById(conversation.poemId)
             .orElseThrow { IllegalArgumentException("Poem not found") }
-
-        conversation.addChat(
-            Chat(
-                role = Role.USER,
-                content = request.content,
-                conversation = conversation
-            )
-        )
 
         val prompt = """
         [시]
@@ -55,20 +48,31 @@ class ConversationService(
         ${request.content}
     """.trimIndent()
 
-        val aiResponse = aiService.elaborate(prompt)
-
-        conversation.addChat(
-            Chat(
-                role = Role.ASSISTANT,
-                content = aiResponse,
-                conversation = conversation
+        return aiService.elaborate(prompt)
+            .map { token ->
+                ElaborateResponse(
+                    conversationId = conversation.id,
+                    delta = token
+                )
+            }
+            .onErrorResume { e ->
+                Flux.just(
+                    ElaborateResponse(
+                        conversationId = conversation.id,
+                        delta = "",
+                        done = true
+                    )
+                )
+            }
+            .concatWith(
+                Flux.just(
+                    ElaborateResponse(
+                        conversationId = conversation.id,
+                        delta = "",
+                        done = true
+                    )
+                )
             )
-        )
-
-        return ElaborateResponse(
-            conversationId = conversation.id,
-            content = aiResponse
-        )
     }
     @Transactional(readOnly = true)
     fun getConversation(conversationId: Long): ConversationResponse {

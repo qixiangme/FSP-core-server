@@ -9,5 +9,6 @@ data class ElaborateRequest(
 )
 data class ElaborateResponse(
     val conversationId: Long,
-    val content: String
+    val delta: String,
+    val done: Boolean = false
 )

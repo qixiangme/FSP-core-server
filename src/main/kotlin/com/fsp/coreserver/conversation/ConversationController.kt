@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Flux
 
 @RestController
 @RequestMapping("/conversations")
@@ -16,16 +17,16 @@ class ConversationController(
     private val conversationService: ConversationService,
 ) {
 
-    @PostMapping("/elaborate/{conversationId}")
+    @PostMapping("/elaborate/{conversationId}",
+        produces = ["text/event-stream"])
     fun elaborate(
         @PathVariable conversationId: Long,
         @RequestBody request: ElaborateRequest
-    ): ResponseEntity<ElaborateResponse> {
+    ): Flux<ElaborateResponse> {
 
         val enrichedRequest = request.copy(conversationId = conversationId)
-        return ResponseEntity.ok(
-            conversationService.generateChat(enrichedRequest)
-        )
+        return conversationService.generateChat(enrichedRequest)
+
     }
 
     @GetMapping("/{conversationId}")

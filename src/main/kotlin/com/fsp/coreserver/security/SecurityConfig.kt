@@ -22,7 +22,7 @@ open class SecurityConfig {
                 auth
                     // User API - 인증 불필요
                     .requestMatchers("/users/**").permitAll()
-
+                    .requestMatchers("/conversations/elaborate/**").permitAll()
 //                    // Poem API - 모두 허용 (개발용)
 //                    .requestMatchers("/poem/**").permitAll()
 //
