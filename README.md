@@ -2,7 +2,7 @@
 
 # FSP-core-server
 
-🔗 **Server Address:** 
+🔗 **Server Address:**  http://ec2-15-134-227-197.ap-southeast-2.compute.amazonaws.com
 
 ## 📖 개요 (Overview)
 
