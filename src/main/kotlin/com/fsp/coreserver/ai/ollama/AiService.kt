@@ -13,7 +13,7 @@ class AiService(
     private val ollamaChatModel: OllamaChatModel
 ) {
 
-    fun elaborate(text: String,poem: String): Flux<String> {
+    fun elaborate(text: String ): Flux<String> {
 
         val options = OllamaOptions.builder()
             .model("gemma3:4b")

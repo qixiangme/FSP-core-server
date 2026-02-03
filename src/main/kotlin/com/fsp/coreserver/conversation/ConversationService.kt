@@ -43,12 +43,10 @@ class ConversationService(
         제목: ${poem.title}
         작가: ${poem.author}
         본문: ${poem.content}
-        """.trimIndent()
-        val textprompt = """
         ${request.content}
     """.trimIndent()
 
-        return aiService.elaborate(textprompt,prompt)
+        return aiService.elaborate(prompt)
             .map { token ->
                 ElaborateResponse(
                     conversationId = conversation.id,
