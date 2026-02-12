@@ -1,0 +1,7 @@
+jwt:
+  # Base64-encoded 256-bit secret for HS256 (at least 32 bytes before encoding).
+  secret: ${JWT_SECRET:Zm9vYmFyYmF6cXV4b2RpY2tmbG9zdHJhdmFsZXR0ZXN0a2V5}
+  issuer: ${JWT_ISSUER:fsp-core-server}
+  audience: ${JWT_AUDIENCE:fsp-clients}
+  access-token-validity: ${JWT_ACCESS_TOKEN_VALIDITY:3600000}
+  refresh-token-validity: ${JWT_REFRESH_TOKEN_VALIDITY:86400000}
