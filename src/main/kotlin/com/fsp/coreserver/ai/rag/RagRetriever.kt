@@ -16,7 +16,7 @@ class RagRetriever(
             .similarityThreshold(similarityThreshold)
             .build()
 
-        return vectorStore.similaritySearch(request)
+        return vectorStore.similaritySearch(request) ?: emptyList()
     }
 
     fun retrieveContext(question: String, topK: Int = 4): String {
