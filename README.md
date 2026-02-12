@@ -65,6 +65,15 @@ java -jar build/libs/*.jar
 
 ---
 
+
+## 🤖 Spring AI RAG 확장 가이드
+
+현재 AI 시 해석 기능을 **검색 증강 생성(RAG)** 구조로 개선하려면 아래 문서를 참고하세요.
+
+- [`SPRING_AI_RAG_GUIDE.md`](./SPRING_AI_RAG_GUIDE.md): 현재 코드베이스 기준으로 단계별 적용 전략, 샘플 코드, 운영 시 주의사항 정리
+
+---
+
 ## 📜 라이선스
 
 This project is licensed under the **MIT License**.
