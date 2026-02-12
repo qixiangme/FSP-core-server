@@ -18,7 +18,10 @@ class RagIngestionService(
 
     @PostConstruct
     fun bootstrapIndex() {
-        reindexAll()
+        runCatching { reindexAll() }
+            .onFailure { ex ->
+                log.warn("RAG bootstrap indexing failed. service will continue without fresh index", ex)
+            }
     }
 
     @Transactional(readOnly = true)
@@ -29,8 +32,11 @@ class RagIngestionService(
             return
         }
 
-        vectorStore.add(docs)
-        log.info("RAG indexing completed - {} poems indexed", docs.size)
+        runCatching { vectorStore.add(docs) }
+            .onSuccess { log.info("RAG indexing completed - {} poems indexed", docs.size) }
+            .onFailure { ex ->
+                log.warn("RAG full indexing failed. docs={}", docs.size, ex)
+            }
     }
 
     fun indexPoem(poem: Poem) {

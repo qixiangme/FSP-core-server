@@ -3,6 +3,7 @@ package com.fsp.coreserver.poem
 import com.fsp.coreserver.ai.rag.RagIngestionService
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 
@@ -11,11 +12,12 @@ class PoemService(
     private val poemRepository: PoemRepository,
     private val ragIngestionService: RagIngestionService,
 ) {
+    private val log = LoggerFactory.getLogger(javaClass)
 
     @CacheEvict(cacheNames = ["poem"], allEntries = true)
     fun createPoem(request: PoemRequest): PoemResponse {
         if (poemRepository.existsByTitleAndAuthor(request.title, request.author)) {
-            throw RuntimeException("이미 존재하는 시입니다.")
+            throw DuplicatePoemException("이미 존재하는 시입니다.")
         }
 
         val poem = Poem(
@@ -25,7 +27,11 @@ class PoemService(
         )
 
         val saved = poemRepository.save(poem)
-        ragIngestionService.indexPoem(saved)
+
+        runCatching { ragIngestionService.indexPoem(saved) }
+            .onFailure { ex ->
+                log.warn("Poem created but RAG indexing failed. poemId={}", saved.id, ex)
+            }
 
         return PoemResponse(
             id = saved.id,
