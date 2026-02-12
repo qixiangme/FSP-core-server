@@ -39,14 +39,7 @@ class ConversationService(
         val poem = poemRepository.findById(conversation.poemId)
             .orElseThrow { IllegalArgumentException("Poem not found") }
 
-        val prompt = """
-        제목: ${poem.title}
-        작가: ${poem.author}
-        본문: ${poem.content}
-        ${request.content}
-    """.trimIndent()
-
-        return aiService.elaborate(prompt)
+        return aiService.elaborateWithRag(poem, request.content)
             .map { token ->
                 ElaborateResponse(
                     conversationId = conversation.id,

@@ -1,5 +1,6 @@
 package com.fsp.coreserver.poem
 
+import com.fsp.coreserver.ai.rag.RagIngestionService
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class PoemService(
     private val poemRepository: PoemRepository,
+    private val ragIngestionService: RagIngestionService,
 ) {
 
     @CacheEvict(cacheNames = ["poem"], allEntries = true)
@@ -23,6 +25,7 @@ class PoemService(
         )
 
         val saved = poemRepository.save(poem)
+        ragIngestionService.indexPoem(saved)
 
         return PoemResponse(
             id = saved.id,
