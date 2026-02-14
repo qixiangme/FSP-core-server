@@ -9,7 +9,7 @@ services:
       - redis_data:/data
 
   server:
-    image: qixiangme903/fsp-core-server:v2.0.0
+    build: .
     container_name: fsp-core-server
     depends_on:
       - redis
