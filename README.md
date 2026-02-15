@@ -29,6 +29,28 @@
 
 ---
 
+## 📈 성능 측정/모니터링
+
+Spring Boot Actuator + Micrometer(Prometheus)를 적용해 서버 성능 지표를 수집할 수 있습니다.
+
+### 주요 엔드포인트
+- `GET /actuator/health` : 애플리케이션/의존성 상태 확인
+- `GET /actuator/metrics` : 수집 중인 메트릭 목록 확인
+- `GET /actuator/metrics/http.server.requests` : API 응답시간/요청수 확인
+- `GET /actuator/prometheus` : Prometheus 스크랩 포맷 메트릭
+
+### 빠른 확인 예시
+```bash
+curl http://localhost:8084/actuator/health
+curl http://localhost:8084/actuator/metrics/http.server.requests
+curl http://localhost:8084/actuator/prometheus
+```
+
+`http.server.requests` 메트릭에는 상태코드, URI, 메서드별 요청 수와 지연시간이 포함되며
+SLO 버킷(`100ms`, `300ms`, `500ms`, `1s`, `3s`) 기반으로 성능 개선 전/후 비교가 가능합니다.
+
+---
+
 ## 🚀 실행 방법
 
 ### 1. Docker를 이용한 실행

@@ -23,6 +23,9 @@ open class SecurityConfig {
                     // User API - 인증 불필요
                     .requestMatchers("/users/**").permitAll()
                     .requestMatchers("/conversations/elaborate/**").permitAll()
+
+                    // 모니터링 엔드포인트
+                    .requestMatchers("/actuator/health", "/actuator/info", "/actuator/prometheus").permitAll()
 //                    // Poem API - 모두 허용 (개발용)
 //                    .requestMatchers("/poem/**").permitAll()
 //
