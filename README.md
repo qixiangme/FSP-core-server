@@ -28,6 +28,9 @@
 | **Deployment** | **Docker** | 컨테이너 기반 배포 및 환경 격리 |
 
 ---
+## 아키텍쳐
+<img width="1998" height="589" alt="image" src="https://github.com/user-attachments/assets/97d76e15-3420-468b-8df2-066ecbc25548" />
+
 
 ## 🚀 실행 방법
 
