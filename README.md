@@ -34,6 +34,55 @@
 <img width="1998" height="589" alt="image" src="https://github.com/user-attachments/assets/97d76e15-3420-468b-8df2-066ecbc25548" />
 
 
+## 📈 성능 측정/모니터링
+
+현재 구성은 **Spring Boot Actuator + Micrometer + Prometheus + Grafana** 기준입니다.
+
+### 1) 메트릭 수집 확인 (서버 단독)
+아래 엔드포인트로 앱이 메트릭을 정상 노출하는지 먼저 확인합니다.
+
+- `GET /actuator/health`
+- `GET /actuator/metrics`
+- `GET /actuator/metrics/http.server.requests`
+- `GET /actuator/prometheus`
+
+```bash
+curl http://localhost:8084/actuator/health
+curl http://localhost:8084/actuator/metrics/http.server.requests
+curl http://localhost:8084/actuator/prometheus
+```
+
+### 2) Prometheus + Grafana 실행
+`docker-compose.yml`에 Prometheus(9090), Grafana(3000)가 포함되어 있습니다.
+
+```bash
+docker compose up -d --build
+```
+
+- Prometheus UI: `http://localhost:9090`
+- Grafana UI: `http://localhost:3000` (기본 계정 `admin/admin`)
+
+### 3) Prometheus에서 바로 보는 핵심 쿼리
+- 최근 1분 RPS
+  - `sum(rate(http_server_requests_seconds_count[1m]))`
+- URI별 평균 응답시간
+  - `sum(rate(http_server_requests_seconds_sum[1m])) by (uri) / sum(rate(http_server_requests_seconds_count[1m])) by (uri)`
+- 95퍼센타일 응답시간
+  - `histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket[5m])) by (le, uri))`
+- 5xx 비율
+  - `sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m])) / sum(rate(http_server_requests_seconds_count[5m]))`
+
+### 4) 개선 전/후 비교 방법
+1. 동일 부하 조건(예: nGrinder/k6/JMeter)으로 API를 호출
+2. 위 쿼리의 값(RPS, p95, 5xx)을 기록
+3. 코드/쿼리 튜닝 후 동일 시나리오 재측정
+4. `p95 감소`, `RPS 증가`, `5xx 감소`를 기준으로 개선 여부 판단
+
+`http.server.requests`는 SLO 버킷(`100ms`, `300ms`, `500ms`, `1s`, `3s`)으로 집계되므로,
+특정 API가 어느 구간에 몰리는지 쉽게 확인할 수 있습니다.
+
+---
+
 ## 🚀 실행 방법
 
 ### 1. Docker를 이용한 실행
