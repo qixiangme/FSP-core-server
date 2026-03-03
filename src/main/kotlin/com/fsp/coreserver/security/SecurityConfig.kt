@@ -2,6 +2,7 @@ package com.fsp.coreserver.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.web.SecurityFilterChain
@@ -11,7 +12,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
-open class SecurityConfig {
+@EnableConfigurationProperties(CorsProperties::class)
+open class SecurityConfig(
+    private val corsProperties: CorsProperties
+) {
 
     @Bean
     open fun filterChain(http: HttpSecurity, jwtAuthenticationFilter: JwtAuthenticationFilter): SecurityFilterChain {
@@ -43,10 +47,17 @@ open class SecurityConfig {
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val config = CorsConfiguration()
-        config.allowedOriginPatterns = listOf("*")
-        config.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        config.allowedHeaders = listOf("*")
-        config.allowCredentials = true
+        config.allowedMethods = corsProperties.allowedMethods
+        config.allowedHeaders = corsProperties.allowedHeaders
+        config.allowCredentials = corsProperties.allowCredentials
+        if (corsProperties.allowCredentials && corsProperties.allowedOrigins.any { it == "*" }) {
+            throw IllegalArgumentException("CORS allowCredentials=true does not support wildcard origins.")
+        }
+        if (corsProperties.allowedOrigins.isNotEmpty()) {
+            config.allowedOrigins = corsProperties.allowedOrigins
+        } else if (corsProperties.allowedOriginPatterns.isNotEmpty()) {
+            config.allowedOriginPatterns = corsProperties.allowedOriginPatterns
+        }
 
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", config)
