@@ -16,11 +16,12 @@ class JwtAuthenticationFilter(private val jwtUtil: JwtUtil) : OncePerRequestFilt
 //        // ✅ 모든 요청에 대해 필터 적용 안함 (개발용)
 //        return true
 //
-        if (request.method == "OPTIONS") return true
-         val path = request.requestURI
-         return path.startsWith("/users/") ||
-                path.startsWith("/h2-console")
-
+//        if (request.method == "OPTIONS") return true
+//         val path = request.requestURI
+//         return path == ("/users/signup") ||
+//                 path == ("/users/login") ||
+//                path.startsWith("/h2-console")
+        return request.method == "OPTIONS" // 정책판단은 Security Config 가 함
     }
 
     override fun doFilterInternal(
