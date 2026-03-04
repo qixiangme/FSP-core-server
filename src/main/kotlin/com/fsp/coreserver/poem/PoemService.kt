@@ -3,6 +3,7 @@ package com.fsp.coreserver.poem
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import java.util.Optional
 
 
 @Service
@@ -19,7 +20,9 @@ class PoemService(
         val poem = Poem(
             title = request.title,
             content = request.content,
-            author = request.author
+            author = request.author,
+            public = request.public
+
         )
 
         val saved = poemRepository.save(poem)
@@ -42,5 +45,15 @@ class PoemService(
     @Cacheable(cacheNames = ["poem"], key = "'all'")
     fun getPoems(): List<Poem> {
         return poemRepository.findAll()
+    }
+
+    fun getPublicPoems() : Optional<List<Poem>>{
+        return poemRepository.findPoemsByPublic(public = true)
+    }
+    fun getPrivatePoems() : Optional<List<Poem>>{
+        return poemRepository.findPoemsByPublic(public = false)
+    }
+    fun increaseView(poem: Poem) {
+        return poem.increaseView()
     }
 }

@@ -10,7 +10,8 @@ import jakarta.persistence.Id
 class Poem(
     title: String, // 초기화를 위해 생성자 인자로 받음
     author: String, // 불변
-    content: String // 초기화를 위해 생성자 인자로 받음
+    content: String, // 초기화를 위해 생성자 인자로 받음
+    public : Boolean
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +27,25 @@ class Poem(
     @Column(nullable = false, columnDefinition = "TEXT")
     var content: String = content
         private set // 외부에서 'poem.content = ...' 금지
+
+    @Column(nullable = false)
+    var public: Boolean  = public
+        private set
+
+    @Column(nullable =  false)
+    var view : Int = 0
+        private  set
+
+    fun updatePublic(){
+        this.public = true
+    }
+
+    fun updatePrivate(){
+        this.public = false
+    }
+    fun increaseView(){
+        this.view += 1
+    }
 
     // 반드시 이 메서드들을 통해서만 수정 가능 (도메인 로직 보호)
     fun updateContent(newContent: String) {
