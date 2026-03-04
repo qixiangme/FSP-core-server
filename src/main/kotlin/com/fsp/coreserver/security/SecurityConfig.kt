@@ -1,5 +1,6 @@
 package com.fsp.coreserver.security
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -11,18 +12,20 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
-open class SecurityConfig {
+open class SecurityConfig
+//    (@Value("\${app.security.allowed-origins}") private val allowedOrigins: String)
+{
 
     @Bean
     open fun filterChain(http: HttpSecurity, jwtAuthenticationFilter: JwtAuthenticationFilter): SecurityFilterChain {
         http
-            .cors {  }
+//            .cors {}
             .csrf { it.disable() }
             .authorizeHttpRequests { auth ->
                 auth
                     // User API - 인증 불필요
-                    .requestMatchers("/users/**").permitAll()
-                    .requestMatchers("/conversations/elaborate/**").permitAll()
+                    .requestMatchers("/users/signup", "/users/login").permitAll()
+                    .requestMatchers("/h2-console/**").permitAll() // dev 전용
 //                    // Poem API - 모두 허용 (개발용)
 //                    .requestMatchers("/poem/**").permitAll()
 //
@@ -40,16 +43,16 @@ open class SecurityConfig {
 
         return http.build()
     }
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val config = CorsConfiguration()
-        config.allowedOriginPatterns = listOf("*")
-        config.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        config.allowedHeaders = listOf("*")
-        config.allowCredentials = true
-
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", config)
-        return source
-    }
+//    @Bean
+//    fun corsConfigurationSource(): CorsConfigurationSource {
+//        val config = CorsConfiguration()
+//        config.allowedOrigins = allowedOrigins.split(",").map { it.trim() }.filter { it.isNotBlank() }
+//        config.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//        config.allowedHeaders = listOf("*")
+//        config.allowCredentials = true
+//
+//        val source = UrlBasedCorsConfigurationSource()
+//        source.registerCorsConfiguration("/**", config)
+//        return source
+//    }
 }
