@@ -32,6 +32,15 @@ class PoemController(
     fun getPoems(): List<Poem> {
         return poemService.getPoems()
     }
+    @GetMapping("/private")
+    fun getPrivatePoems(): Optional<List<Poem>>{
+        return poemService.getPrivatePoems()
+    }
+
+    @GetMapping("/public")
+    fun getPublicPoems() : Optional<List<Poem>>{
+        return poemService.getPublicPoems()
+    }
 
     @GetMapping("/{id}")
     fun getPoemById(@PathVariable id: Long): Poem? {

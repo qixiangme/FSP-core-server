@@ -23,11 +23,16 @@
 | **Language** | **Kotlin** | 간결하고 안전한 서버 사이드 로직 구현 |
 | **Framework** | **Spring Boot** | 애플리케이션 프레임워크 및 REST API 제공 |
 | **AI Integration** | **Spring AI** | 외부 AI 모델과의 연동 및 프롬프트 관리 |
-| **Security** | **Spring Security** | JWT 기반의 인증 및 권한 관리 |
-| **Database/Cache** | **Redis** | 토큰 관리 및 데이터 캐싱을 통한 성능 최적화 |
-| **Deployment** | **Docker** | 컨테이너 기반 배포 및 환경 격리 |
+| **Security** | **Spring Security** | JWT 기반 인증 및 권한 관리 |
+| **Database** | **PostgreSQL** | 운영 데이터 저장 및 관계형 스키마 설계 |
+| **ORM** | **Spring Data JPA** | 도메인 기반 데이터 접근 계층 구현 |
+| **Cache** | **Redis** | 토큰 관리 및 조회 성능 최적화를 위한 캐싱 |
+| **Deployment** | **Docker** | 컨테이너 기반 배포 및 환경 격리 ||
 
 ---
+## 아키텍쳐
+<img width="1998" height="589" alt="image" src="https://github.com/user-attachments/assets/97d76e15-3420-468b-8df2-066ecbc25548" />
+
 
 ## 🚀 실행 방법
 
