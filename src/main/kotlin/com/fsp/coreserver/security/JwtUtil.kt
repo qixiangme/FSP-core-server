@@ -3,22 +3,27 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import java.nio.charset.StandardCharsets
 import java.util.Date
+import javax.crypto.SecretKey
 
 
 @Component
-class JwtUtil {
-    private val secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256)
-    private val accessTokenValidity = 1000 * 60 * 60L
-    private val refreshTokenValidity = 1000 * 60 * 60 * 24L
+class JwtUtil(
+    @Value("\${jwt.secret}") jwtSecret: String,
+    @Value("\${jwt.access-token-validity-ms:3600000}") private val accessTokenValidity: Long,
+    @Value("\${jwt.refresh-token-validity-ms:86400000}") private val refreshTokenValidity: Long
 
+) {
+    private val secretKey : SecretKey = Keys.hmacShaKeyFor(jwtSecret.toByteArray(StandardCharsets.UTF_8))
     fun generateToken(email: String) : String  =
         Jwts.builder()
             .setSubject(email)
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + accessTokenValidity))
-            .signWith(SignatureAlgorithm.HS256,secretKey)
+            .signWith(secretKey,SignatureAlgorithm.HS256)
             .compact()
 
     fun generateRefreshToken(email: String) : String =
@@ -26,12 +31,13 @@ class JwtUtil {
             .setSubject(email)
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + refreshTokenValidity))
-            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .signWith(secretKey,SignatureAlgorithm.HS256)
             .compact()
 
     private fun getClaims(token: String) : Claims =
-        Jwts.parser()
+        Jwts.parserBuilder()
             .setSigningKey(secretKey)
+            .build()
             .parseClaimsJws(token)
             .body
     fun getEmail(token:String) : String =
