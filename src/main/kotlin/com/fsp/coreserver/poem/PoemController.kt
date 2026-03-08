@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.Optional
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/poem")
@@ -23,7 +24,7 @@ class PoemController(
 
     // ----------------- 시 생성 / 조회 -----------------
     @PostMapping()
-    fun createPoem(@RequestBody request: PoemRequest): ResponseEntity<PoemResponse> {
+    fun createPoem(@Valid @RequestBody request: PoemRequest): ResponseEntity<PoemResponse> {
         val response = poemService.createPoem(request)
         return ResponseEntity.ok(response)
     }
